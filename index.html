@@ -91,9 +91,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>这是一个能通过Alfred脚本找到想要的表情包的应用</p>
-<h1 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h1><img src="/2020/03/05/alfred-find-meme/alfred-find-meme.gif" class="" title="This is an example image">
-
-
+<h1 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h1><p><img src="http://oss2.wangyuyang.top/wp-content/uploads/2020/03/alfred-find-meme.gif" alt="image"></p>
 <h1 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h1><h2 id="版本1-0"><a href="#版本1-0" class="headerlink" title="版本1.0"></a>版本1.0</h2><p>本地加载表情包数据，通过以下代码查询</p>
 <pre><code>tmp += wf.filter(input_data, data.keys(), key=lambda x: x,max_results=20, match_on=17)</code></pre><p>得到查询结果后，开一个新的线程来下载数据，同时调用wf.add_item来添加到显示窗口</p>
 <pre><code>def downloader(url):
@@ -105,7 +103,7 @@
         file.write(r.content)
 Thread(target=downloader, args=(url,)).start()</code></pre><p>一开始并没有考虑性能优化，用的是本地JSON文件，但是这个JSON文件有将近30MB大小，而且有大约14万条表情包数据。导致在本地使用workflow来搜索的时候性能较差，每次搜索要大概一到两秒钟。</p>
 <p>当时有一个思路就是改用数据库，可是Alfred使用python2.7，而且并不便于部署。同时Alfred脚本还要兼顾灵活性，方便传播这个脚本。所以本地数据库的方案不可行。</p>
-<h2 id="版本1-1"><a href="#版本1-1" class="headerlink" title="版本1.1"></a>版本1.1</h2><p>调用LeanCloud REST API来查询数据，同时把所有表情包数据存入LeanCloud，并且为keyword字段添加索引来加快查询速度。<br><img src="Screen-Shot-2020-03-05-at-13.22.53-1024x643.png" alt=""><br><img src="Screen-Shot-2020-03-05-at-13.23.05-1024x297.png" alt=""></p>
+<h2 id="版本1-1"><a href="#版本1-1" class="headerlink" title="版本1.1"></a>版本1.1</h2><p>调用LeanCloud REST API来查询数据，同时把所有表情包数据存入LeanCloud，并且为keyword字段添加索引来加快查询速度。 <img src="http://oss2.wangyuyang.top/wp-content/uploads/2020/03/Screen-Shot-2020-03-05-at-13.22.53-1024x643.png" alt="">)<img src="http://oss2.wangyuyang.top/wp-content/uploads/2020/03/Screen-Shot-2020-03-05-at-13.23.05-1024x297.png" alt=""></p>
 <pre><code>def get_keyword(keyword):
     global api_url
     data = &quot;where=%7B%22keyword%22%3A%7B%22%24regex%22%3A%22%5E&quot;+keyword + \
@@ -114,7 +112,7 @@ Thread(target=downloader, args=(url,)).start()</code></pre><p>一开始并没有
     res = web.get(api_url, headers=header)
     return res.json()[&apos;results&apos;]</code></pre><p>由于LeanCloud提供的SDK是针对python3的，所以我们还需要写一个查询的函数。</p>
 <p>我用的是正则表达式匹配开头的字母，这样的好处是能利用索引加快速度，如果全部匹配的话索引就失效了。</p>
-<p><img src="http://blog.echo.cool/wp-content/uploads/2020/03/Screen-Shot-2020-03-05-at-13.26.58-1024x843.png" alt=""></p>
+<p><img src="http://oss2.wangyuyang.top/wp-content/uploads/2020/03/Screen-Shot-2020-03-05-at-13.26.58-1024x843.png" alt=""></p>
 <p>这里是Alfred的框图，这里还需要解决一个问题，Alfred并没有提供复制图片到剪切板到功能。所以经过Google，我找到了一个可以在mac上使用的，把照片复制到剪贴板的程序。</p>
 <pre><code>#import &lt;Foundation/Foundation.h&gt;
 #import &lt;Cocoa/Cocoa.h&gt;
@@ -163,7 +161,7 @@ int main(int argc, char * const argv[])
 }
 
 gcc -Wall -g -O3 -ObjC -framework Foundation -framework AppKit -o impbcopy impbcopy.m</code></pre><p>这样，把impbcopy放到程序目录，就可以复制了～</p>
-<p><img src="http://blog.echo.cool/wp-content/uploads/2020/03/Screen-Shot-2020-03-05-at-13.33.30-1024x843.png" alt=""></p>
+<p><img src="http://oss2.wangyuyang.top/wp-content/uploads/2020/03/Screen-Shot-2020-03-05-at-13.33.30-1024x843.png" alt=""></p>
 <h1 id="开源地址："><a href="#开源地址：" class="headerlink" title="开源地址："></a>开源地址：</h1><p><a href="https://github.com/echo-cool/Alfred-Find-Meme" target="_blank" rel="noopener">https://github.com/echo-cool/Alfred-Find-Meme</a></p>
 
       
@@ -205,8 +203,7 @@ gcc -Wall -g -O3 -ObjC -framework Foundation -framework AppKit -o impbcopy impbc
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天写了一个Alfred的workflow，简单记一下遇到的问题。<br><img src="/.io//Screen-Shot-2020-02-29-at-20.53.25-1024x764.png" alt> </p>
-<p>首先，如果使用python开发Alfred最好使用python2，目前还没有找到支持python3版本的库。 如果使用python2就可以使用 <a href="https://www.deanishe.net/alfred-workflow/index.html" target="_blank" rel="noopener">Alfred-Workflow</a>这个库，很方便而且提供了很多API可以直接调用。</p>
+        <p>今天写了一个Alfred的workflow，简单记一下遇到的问题。 <img src="http://oss2.wangyuyang.top/wp-content/uploads/2020/02/Screen-Shot-2020-02-29-at-20.53.25-1024x764.png" alt=""> 首先，如果使用python开发Alfred最好使用python2，目前还没有找到支持python3版本的库。 如果使用python2就可以使用 <a href="https://www.deanishe.net/alfred-workflow/index.html" target="_blank" rel="noopener">Alfred-Workflow</a>这个库，很方便而且提供了很多API可以直接调用。</p>
 <pre><code>def main(wf):
      wf.send_feedback()
 if __name__ == &apos;__main__&apos;:
@@ -216,10 +213,8 @@ if __name__ == &apos;__main__&apos;:
 <p>wf传入是实例，传入的参数在wf中，如果需要获取传入的参数可以通过wf.args获取</p>
 <pre><code>args = wf.args
 input_data = args[0]</code></pre><p>之后，由于是workflow很可能会遇到搜索数据的场景。这个库提供了一个方法来过滤数据</p>
-<pre><code>tmp = wf.filter(input_data, data.keys(), key=lambda x: x)</code></pre><p>此外，如果需要发布程序，需要把<a href="https://www.deanishe.net/alfred-workflow/index.html" target="_blank" rel="noopener">Alfred-Workflow</a>本地化，可以新建一个文件夹来放这个库。 </p>
-<p><img src="/.io//Screen-Shot-2020-02-29-at-20.51.04-1024x731.png" alt> </p>
-<p>回到这个项目本身，这个项目中，所有数据都存贮在json中，所以我们可以直接搜索键值来定位数据。</p>
-<p><img src="/.io//Screen-Shot-2020-02-29-at-20.52.15-1024x620.png" alt></p>
+<pre><code>tmp = wf.filter(input_data, data.keys(), key=lambda x: x)</code></pre><p>此外，如果需要发布程序，需要把<a href="https://www.deanishe.net/alfred-workflow/index.html" target="_blank" rel="noopener">Alfred-Workflow</a>本地化，可以新建一个文件夹来放这个库。 <img src="http://oss2.wangyuyang.top/wp-content/uploads/2020/02/Screen-Shot-2020-02-29-at-20.51.04-1024x731.png" alt=""> 回到这个项目本身，这个项目中，所有数据都存贮在json中，所以我们可以直接搜索键值来定位数据。</p>
+<p><img src="http://oss2.wangyuyang.top/wp-content/uploads/2020/02/Screen-Shot-2020-02-29-at-20.52.15-1024x620.png" alt=""></p>
 
       
     </div>
