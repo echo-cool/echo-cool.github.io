@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://echo_cool.gitee.io/echo-cool/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="John Doe">
@@ -56,7 +56,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://echo_cool.gitee.io/echo-cool"></form>
       </div>
     </div>
   </div>
@@ -91,7 +91,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>这是一个能通过Alfred脚本找到想要的表情包的应用</p>
-<h1 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h1><p><img src="/.com//alfred-find-meme.gif" alt="image"></p>
+<h1 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h1><p><img src="/.io//alfred-find-meme.gif" alt="image"></p>
 <h1 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h1><h2 id="版本1-0"><a href="#版本1-0" class="headerlink" title="版本1.0"></a>版本1.0</h2><p>本地加载表情包数据，通过以下代码查询</p>
 <pre><code>tmp += wf.filter(input_data, data.keys(), key=lambda x: x,max_results=20, match_on=17)</code></pre><p>得到查询结果后，开一个新的线程来下载数据，同时调用wf.add_item来添加到显示窗口</p>
 <pre><code>def downloader(url):
@@ -103,7 +103,7 @@
         file.write(r.content)
 Thread(target=downloader, args=(url,)).start()</code></pre><p>一开始并没有考虑性能优化，用的是本地JSON文件，但是这个JSON文件有将近30MB大小，而且有大约14万条表情包数据。导致在本地使用workflow来搜索的时候性能较差，每次搜索要大概一到两秒钟。</p>
 <p>当时有一个思路就是改用数据库，可是Alfred使用python2.7，而且并不便于部署。同时Alfred脚本还要兼顾灵活性，方便传播这个脚本。所以本地数据库的方案不可行。</p>
-<h2 id="版本1-1"><a href="#版本1-1" class="headerlink" title="版本1.1"></a>版本1.1</h2><p>调用LeanCloud REST API来查询数据，同时把所有表情包数据存入LeanCloud，并且为keyword字段添加索引来加快查询速度。<br><img src="/.com//Screen-Shot-2020-03-05-at-13.22.53-1024x643.png" alt><br><img src="/.com//Screen-Shot-2020-03-05-at-13.23.05-1024x297.png" alt></p>
+<h2 id="版本1-1"><a href="#版本1-1" class="headerlink" title="版本1.1"></a>版本1.1</h2><p>调用LeanCloud REST API来查询数据，同时把所有表情包数据存入LeanCloud，并且为keyword字段添加索引来加快查询速度。<br><img src="/.io//Screen-Shot-2020-03-05-at-13.22.53-1024x643.png" alt><br><img src="/.io//Screen-Shot-2020-03-05-at-13.23.05-1024x297.png" alt></p>
 <pre><code>def get_keyword(keyword):
     global api_url
     data = &quot;where=%7B%22keyword%22%3A%7B%22%24regex%22%3A%22%5E&quot;+keyword + \
@@ -167,7 +167,7 @@ gcc -Wall -g -O3 -ObjC -framework Foundation -framework AppKit -o impbcopy impbc
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/05/alfred-find-meme/" data-id="ck7gce36w00004f4x82hfedku" class="article-share-link">Share</a>
+      <a data-url="http://echo_cool.gitee.io/echo-cool/2020/03/05/alfred-find-meme/" data-id="ck7gce36w00004f4x82hfedku" class="article-share-link">Share</a>
       
       
     </footer>
@@ -219,7 +219,7 @@ input_data = args[0]</code></pre><p>之后，由于是workflow很可能会遇到
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/02/29/alfred3-find-emoji/" data-id="ck7gce37100014f4x8zwbhvuh" class="article-share-link">Share</a>
+      <a data-url="http://echo_cool.gitee.io/echo-cool/2020/02/29/alfred3-find-emoji/" data-id="ck7gce37100014f4x8zwbhvuh" class="article-share-link">Share</a>
       
       
     </footer>
