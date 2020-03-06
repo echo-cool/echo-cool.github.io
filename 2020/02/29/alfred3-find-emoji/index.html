@@ -174,7 +174,7 @@
         <div class="post-content mx-auto" id="post">
           
           <div class="markdown-body">
-            <p>今天写了一个Alfred的workflow，简单记一下遇到的问题。 <img src="http://oss2.wangyuyang.top/wp-content/uploads/2020/02/Screen-Shot-2020-02-29-at-20.53.25-1024x764.png" srcset="/img/loading.gif" alt=""> 首先，如果使用python开发Alfred最好使用python2，目前还没有找到支持python3版本的库。 如果使用python2就可以使用 <a href="https://www.deanishe.net/alfred-workflow/index.html" target="_blank" rel="noopener">Alfred-Workflow</a>这个库，很方便而且提供了很多API可以直接调用。</p>
+            <p>今天写了一个Alfred的workflow，简单记一下遇到的问题。 <img src="http://oss2.wangyuyang.top/wp-content/uploads/2020/02/Screen-Shot-2020-02-29-at-20.53.25-1024x764.png" alt=""> 首先，如果使用python开发Alfred最好使用python2，目前还没有找到支持python3版本的库。 如果使用python2就可以使用 <a href="https://www.deanishe.net/alfred-workflow/index.html" target="_blank" rel="noopener">Alfred-Workflow</a>这个库，很方便而且提供了很多API可以直接调用。</p>
 <pre><code>def main(wf):
      wf.send_feedback()
 if __name__ == &apos;__main__&apos;:
@@ -184,8 +184,8 @@ if __name__ == &apos;__main__&apos;:
 <p>wf传入是实例，传入的参数在wf中，如果需要获取传入的参数可以通过wf.args获取</p>
 <pre><code>args = wf.args
 input_data = args[0]</code></pre><p>之后，由于是workflow很可能会遇到搜索数据的场景。这个库提供了一个方法来过滤数据</p>
-<pre><code>tmp = wf.filter(input_data, data.keys(), key=lambda x: x)</code></pre><p>此外，如果需要发布程序，需要把<a href="https://www.deanishe.net/alfred-workflow/index.html" target="_blank" rel="noopener">Alfred-Workflow</a>本地化，可以新建一个文件夹来放这个库。 <img src="http://oss2.wangyuyang.top/wp-content/uploads/2020/02/Screen-Shot-2020-02-29-at-20.51.04-1024x731.png" srcset="/img/loading.gif" alt=""> 回到这个项目本身，这个项目中，所有数据都存贮在json中，所以我们可以直接搜索键值来定位数据。</p>
-<p><img src="http://oss2.wangyuyang.top/wp-content/uploads/2020/02/Screen-Shot-2020-02-29-at-20.52.15-1024x620.png" srcset="/img/loading.gif" alt=""></p>
+<pre><code>tmp = wf.filter(input_data, data.keys(), key=lambda x: x)</code></pre><p>此外，如果需要发布程序，需要把<a href="https://www.deanishe.net/alfred-workflow/index.html" target="_blank" rel="noopener">Alfred-Workflow</a>本地化，可以新建一个文件夹来放这个库。 <img src="http://oss2.wangyuyang.top/wp-content/uploads/2020/02/Screen-Shot-2020-02-29-at-20.51.04-1024x731.png" alt=""> 回到这个项目本身，这个项目中，所有数据都存贮在json中，所以我们可以直接搜索键值来定位数据。</p>
+<p><img src="http://oss2.wangyuyang.top/wp-content/uploads/2020/02/Screen-Shot-2020-02-29-at-20.52.15-1024x620.png" alt=""></p>
 
             <hr>
           </div>
@@ -310,8 +310,6 @@ input_data = args[0]</code></pre><p>之后，由于是workflow很可能会遇到
 <script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
 <script  src="/js/main.js" ></script>
 
-
-  <script  src="/js/lazyload.js" ></script>
 
 
 
@@ -448,6 +446,56 @@ input_data = args[0]</code></pre><p>之后，由于是workflow很可能会遇到
 
 
 
+
+  
+  
+    <script type="text/javascript">
+      //定义获取词语下标
+      var a_idx = 0;
+      jQuery(document).ready(function ($) {
+        //点击body时触发事件
+        $("body").click(function (e) {
+          //需要显示的词语
+          var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善");
+          //设置词语给span标签
+          var $i = $("<span/>").text(a[a_idx]);
+          //下标等于原来下标+1  余 词语总数
+          a_idx = (a_idx + 1) % a.length;
+          //获取鼠标指针的位置，分别相对于文档的左和右边缘。
+          //获取x和y的指针坐标
+          var x = e.pageX, y = e.pageY;
+          //在鼠标的指针的位置给$i定义的span标签添加css样式
+          $i.css({
+            "z-index": 999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": rand_color()
+          });
+          // 随机颜色
+          function rand_color() {
+            return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+          }
+          //在body添加这个标签
+          $("body").append($i);
+          //animate() 方法执行 CSS 属性集的自定义动画。
+          //该方法通过CSS样式将元素从一个状态改变为另一个状态。CSS属性值是逐渐改变的，这样就可以创建动画效果。
+          //详情请看http://www.w3school.com.cn/jquery/effect_animate.asp
+          $i.animate({
+            //将原来的位置向上移动180
+            "top": y - 180,
+            "opacity": 0
+            //1500动画的速度
+          }, 1500, function () {
+            //时间到了自动删除
+            $i.remove();
+          });
+        });
+      })
+      ;
+    </script>
+  
 
 
 
