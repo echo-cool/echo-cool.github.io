@@ -91,9 +91,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>这是一个能通过Alfred脚本找到想要的表情包的应用</p>
-<h1 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h1><img src="/2020/03/05/alfred-find-meme/03/05/alfred-find-meme/alfred-find-meme.gif" class title="This is an example image">
-
-<p><img src="/2020/03/05/alfred-find-meme/alfred-find-meme.gif" alt="image"></p>
+<h1 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h1><p><img src="/2020/03/05/alfred-find-meme/alfred-find-meme.gif" alt="image"></p>
 <h1 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h1><h2 id="版本1-0"><a href="#版本1-0" class="headerlink" title="版本1.0"></a>版本1.0</h2><p>本地加载表情包数据，通过以下代码查询</p>
 <pre><code>tmp += wf.filter(input_data, data.keys(), key=lambda x: x,max_results=20, match_on=17)</code></pre><p>得到查询结果后，开一个新的线程来下载数据，同时调用wf.add_item来添加到显示窗口</p>
 <pre><code>def downloader(url):
